@@ -5,27 +5,46 @@
 #include <time.h>
 using namespace std;
 
-void out_mas(int** World, int n) {
+void out_mas(int** world, int n) { //вывод массива
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			cout << World[i][j] << " ";
+			cout << world[i][j] << " ";
 		}
 		cout << endl;
+	}
+}
+
+bool cell_new_life(int** world, int n,int x,int y) {
+	return 1;
+}
+
+void day(int** world, int** world_after, int n) { //один день эволюции
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (world[i][j]==0 && cell_new_life(world, n, i, j)) {
+				world_after[i][j] = 1;
+			}
+		}
 	}
 }
 
 void main() {
 	//инициализация
 	int n=5; //размер мира
-	int** World; //мир
-	World = new int*[n];
-	for (int i = 0; i < n; i++) 
-		World[i] = new int[n];
+	int** world; //мир
+	world = new int*[n];
+	int** world_after; //мир после дня эволюции
+	world_after = new int* [n];
+	for (int i = 0; i < n; i++) {
+		world[i] = new int[n];
+		world_after[i] = new int[n];
+	}
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			World[i][j] = 0;
+			world[i][j] = 0;
+			world_after[i][j] = 0;
 		}
 	}
-	out_mas(World, n);
+	out_mas(world, n);
 	_getch();
 }
