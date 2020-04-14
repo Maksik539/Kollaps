@@ -2,15 +2,16 @@
 #include <vector>
 #include <stdlib.h>
 #include <conio.h>
+#include <windows.h>
 #include <time.h>
 using namespace std;
 
-void out_mas(int** world, int n) { //вывод массива
+void out_mas(int** mas, int n) { //вывод массива
 	cout << endl;
 	cout << endl;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
-			cout << world[i][j] << " ";
+			cout << mas[i][j] << " ";
 		}
 		cout << endl;
 	}
@@ -26,15 +27,18 @@ int num_life(int** world, int n,int x,int y) {
 				}
 			}
 			if (num > 3) {
+				cout << 0 << endl;
 				return 0;
 			}
 		}
 	}
-	cout << num << endl;
+	
 	if (num < 2) {
+		cout << 0 << endl;
 		return 0;
 	}
 	else {
+		cout << num << endl;
 		return num;
 	}
 }
@@ -57,6 +61,22 @@ void day(int** world, int** world_after, int n) { //один день эволю
 	}
 }
 
+void null_mas(int** mas, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			mas[i][j] = 0;
+		}
+	}
+}
+
+void copy_mas(int** mas1, int** mas2, int n) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			mas1[i][j] = mas2[i][j];
+		}
+	}
+}
+
 void main() {
 	//инициализация
 	int n=5; //размер мира
@@ -74,11 +94,21 @@ void main() {
 			world_after[i][j] = 0;
 		}
 	}
-	world[2][1] = 1;
-	world[1][2] = 1;
-	world[3][2] = 1;
+	world[0][1] = 1;
+	world[1][0] = 1;
+	world[1][1] = 1;
+	world[2][2] = 1;
+	world[3][3] = 1;
+	world[4][4] = 1;
+	world[4][1] = 1;
+	world[1][4] = 1;
 	out_mas(world, n);
-	day(world, world_after, n);
-	out_mas(world_after, n);
+	while (1) {
+		day(world, world_after, n);
+		_getch();
+		out_mas(world_after, n);
+		copy_mas(world, world_after, n);
+		null_mas(world_after, n);
+	}
 	_getch();
 }
