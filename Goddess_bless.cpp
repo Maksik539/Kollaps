@@ -1,12 +1,13 @@
-﻿#include <iostream>
+#include <iostream>
 #include <vector>
 #include <stdlib.h>
+#include <math.h>
 #include <conio.h>
 #include <windows.h>
 #include <time.h>
 using namespace std;
 
-void out_mas(int** mas, int n) { //вывод массива
+void out_mas(int** mas, int n) { //????? ???????
 	cout << endl;
 	cout << endl;
 	for (int i = 0; i < n; i++) {
@@ -17,12 +18,12 @@ void out_mas(int** mas, int n) { //вывод массива
 	}
 }
 
-int num_life(int** world, int n,int x,int y) {
+int num_life(int** world, int n, int x, int y) {
 	int num = 0;
 	for (int i = -1; i <= 1; i++) {
 		for (int j = -1; j <= 1; j++) {
-			if (x+i<n && y+j<n && x+i>=0 && y+j>=0 && !(i == 0 && j == 0)) {
-				if (world[x+i][y+j] == 1) {
+			if (x + i < n && y + j < n && x + i >= 0 && y + j >= 0 && !(i == 0 && j == 0)) {
+				if (world[x + i][y + j] == 1) {
 					num++;
 				}
 			}
@@ -32,7 +33,7 @@ int num_life(int** world, int n,int x,int y) {
 			}
 		}
 	}
-	
+
 	if (num < 2) {
 		cout << 0 << endl;
 		return 0;
@@ -43,7 +44,7 @@ int num_life(int** world, int n,int x,int y) {
 	}
 }
 
-void day(int** world, int** world_after, int n) { //один день эволюции
+void day(int** world, int** world_after, int n) { //???? ???? ????????
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			if (world[i][j] == 0) {
@@ -56,7 +57,7 @@ void day(int** world, int** world_after, int n) { //один день эволю
 					world_after[i][j] = 1;
 				}
 			}
-			
+
 		}
 	}
 }
@@ -77,12 +78,29 @@ void copy_mas(int** mas1, int** mas2, int n) {
 	}
 }
 
-void main() {
-	//инициализация
-	int n=5; //размер мира
-	int** world;  //мир
-	world = new int*[n];
-	int** world_after; //мир после дня эволюции
+int proverka1(int** mas1, int n) {
+	int v=0;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (mas1[i][j] == 0) {
+				v++;
+			}
+		}
+	}
+	if (v == pow(n, 2)) { 
+		cout << "FINISH" << endl;
+		return 1;
+	}
+	return 0;
+}
+
+
+int main() {
+	//?????????????
+	int n = 5; //?????? ????
+	int** world;  //???
+	world = new int* [n];
+	int** world_after; //??? ????? ??? ????????
 	world_after = new int* [n];
 	for (int i = 0; i < n; i++) {
 		world[i] = new int[n];
@@ -109,6 +127,9 @@ void main() {
 		out_mas(world_after, n);
 		copy_mas(world, world_after, n);
 		null_mas(world_after, n);
+		if (proverka1(world, n)) break;
 	}
-	_getch();
+	return 0;
 }
+
+
